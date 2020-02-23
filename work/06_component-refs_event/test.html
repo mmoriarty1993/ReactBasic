@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>06_test</title>
+</head>
+<body>
+    <div id="example1"></div>
+    <div id="example2"></div>
+
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+
+    <script type="text/babel">
+        //1.定义组件
+        class MyCom extends React.Component{
+            constructor(props) {
+                super(props);
+                this.showInput = this.showInput.bind(this)
+                this.handleBlur = this.handleBlur.bind(this)
+            }
+
+            showInput(){
+                //const input = this.refs.content
+                alert(this.input.value)
+            }
+
+            handleBlur(event){
+                //普通写法
+                // alert(this.content.value)
+                alert(event.target.value)
+
+            }
+
+            render(){
+                return(
+                    <div>
+                        <input type="text" ref="content"/>&nbsp;&nbsp;
+                        <input type="text" ref={(input) => this.input = input }/>&nbsp;&nbsp;
+                        <button onClick={this.showInput}>提示输入</button>&nbsp;&nbsp;
+                        {/*
+                        refs写法
+                        <input type="text" ref={content => this.content = content} placeholder="失去焦点提示内容" onBlur={this.handleBlur}>
+                        */}
+                        <input type="text" placeholder="失去焦点提示内容" onBlur={this.handleBlur}/>
+                    </div>
+                )
+            }
+        }
+
+        //2.渲染组件标签
+        ReactDOM.render(<MyCom/>,document.getElementById('example1'))
+    </script>
+</body>
+</html>

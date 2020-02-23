@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>08_form</title>
+</head>
+<body>
+    <div id="example1"></div>
+
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+
+    <script type="text/babel">
+        //1.定义组件
+        class LoginForm extends React.Component{
+            constructor(props) {
+                super(props);
+                //初始化状态
+                this.state = {
+                    pwd: ''
+                }
+                this.handleSubmit = this.handleSubmit.bind(this)
+                this.handleChange = this.handleChange.bind(this)
+            }
+
+            handleSubmit(event){
+                const name = this.nameInput.value
+                const {pwd} = this.state
+                alert(`提交用户名为${name},密码为${pwd}`)
+                //阻止事件的默认行为
+                event.preventDefault()
+
+            }
+            handleChange(event){
+                //读取输入的值
+                const pwd = event.target.value
+                //更新pwd的状态
+                this.setState({pwd})
+            }
+
+            render() {
+                return (
+                    <div>
+                        <form action="/test" onSubmit={this.handleSubmit}>
+                            {/*非受控组件：需要时才手动读取表单输入数据*/}
+                            用户名:<input type="text" ref={input => this.nameInput = input}/>
+                            {/*受控组件：表单项输入数据能自动收集成状态*/}
+                            密码:<input type="password" value={this.state.pwd} onChange={this.handleChange}/>
+                            <input type="submit" value="登录"/>
+                        </form>
+                    </div>
+                );
+            }
+        }
+        //2.渲染组件标签
+        ReactDOM.render(<LoginForm/>,document.getElementById('example1'))
+
+    </script>
+</body>
+</html>
